@@ -79,8 +79,13 @@ class Game {
         } else if (alien.hull <= 0) {
             console.log(`The ${alien.name} went kabloo-ey!`);
             fleet.splice(0, 1);
-            console.log('Aliens remaining: ' + fleet.length);
-            this.optionPrompt();
+            if(fleet.length > 0) {
+                console.log('Aliens remaining: ' + fleet.length);
+                this.optionPrompt();
+            } else {
+                console.log('Victory!');
+                return;
+            }
         }
     }
 }
@@ -89,7 +94,7 @@ const game = new Game();
 const uss_assembly = new Ship();
 const alien = new Alien();
 
-let aliens = 6
+let aliens = 20
 let fleet = createFleet(aliens);
 
 while(fleet.length != 0) {
