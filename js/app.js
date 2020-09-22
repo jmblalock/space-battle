@@ -55,9 +55,7 @@ class Alien {
 }
 
 class Game {
-    constructor() {
-
-    }
+    constructor() {}
     optionPrompt() {
         let answer = prompt("'attack' the next ship or 'retreat'?");
 
@@ -67,9 +65,6 @@ class Game {
             fleet = [];
             console.log('Game Over');
         }
-    }
-    runGame() {
-        
     }
     checkWin(ship, alien) {
         if (ship.hull <= 0) {
@@ -94,7 +89,7 @@ const game = new Game();
 const uss_assembly = new Ship();
 const alien = new Alien();
 
-let aliens = 20
+let aliens = 6
 let fleet = createFleet(aliens);
 
 while(fleet.length != 0) {
