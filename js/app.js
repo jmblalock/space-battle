@@ -2,6 +2,14 @@ function randomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+function createFleet(num) {
+    let alienArr = [];
+    for (let i = 0; i < num; i++) {
+        alienArr.push(new Alien());
+    }
+    return alienArr;
+}
+
 class Ship {
     constructor() {
         this.name = 'uss_assembly';
@@ -21,14 +29,15 @@ class Ship {
                 console.log(`You MISSED the alien!!!`)
             }
         } else {
-            round++;
+            fleet = [];
+            console.log('Game Over');
         }
     }
 }
 
 class Alien {
     constructor() {
-        this.name = 'alien_ship'
+        this.name = 'alien'
         this.hull = Math.floor(randomNumber(3, 6));
         this.firepower = Math.floor(randomNumber(2, 4));
         this.accuracy = randomNumber(.6, .8);
@@ -45,8 +54,7 @@ class Alien {
                 console.log(`The alien MISSED you!!!`)
             }
         } else {
-            round = 5;
-            console.log('alien defeated')
+            fleet.splice(0,1)
         }
     }
 }
@@ -54,6 +62,16 @@ class Alien {
 class Game {
     constructor() {
 
+    }
+    optionPrompt() {
+        let answer = prompt("'attack' the next ship or 'retreat'?");
+
+        if (answer === 'attack') {
+            round++;
+        } else if (answer === 'retreat') {
+            fleet = [];
+            console.log('Game Over');
+        }
     }
     runGame() {
         
@@ -63,7 +81,8 @@ class Game {
             console.log(`${ship.name} went kabloo-ey...`);
             
         } else if (alien.hull <= 0) {
-            console.log(`${alien.name} went kabloo-ey!`);
+            console.log(`${alien.name} ${fleet.length} went kabloo-ey!`);
+            this.optionPrompt();
         }
     }
 }
@@ -72,13 +91,13 @@ class Game {
 const game = new Game();
 const uss_assembly = new Ship();
 const alien = new Alien();
-
 let round = 1;
+let fleet = createFleet(6);
 
-while (round < 4) {
+for (let i = 0; i < fleet.length; i++) {
     console.log('round is: ' + round);
-    uss_assembly.attack(alien);
+    console.log('aliens remaning: ' + fleet.length);
+    uss_assembly.attack(fleet[i]);
     alien.attack(uss_assembly);
-    game.checkWin(uss_assembly, alien);
-    round++;
+    game.checkWin(uss_assembly, fleet[i]);
 }
